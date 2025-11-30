@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Word Clock</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Animated particles background -->
+    <canvas id="particles"></canvas>
+
+    <div class="ambient-light"></div>
+
+    <div class="container">
+        <!-- Watch with frame -->
+        <div class="watch-container">
+            <!-- Corner accents -->
+            <div class="corner-accent corner-tl"></div>
+            <div class="corner-accent corner-tr"></div>
+            <div class="corner-accent corner-bl"></div>
+            <div class="corner-accent corner-br"></div>
+
+            <!-- Edge markers -->
+            <div class="edge-markers top">
+                <div class="marker"></div>
+                <div class="marker major"></div>
+                <div class="marker"></div>
+            </div>
+            <div class="edge-markers right">
+                <div class="marker"></div>
+                <div class="marker major"></div>
+                <div class="marker"></div>
+            </div>
+            <div class="edge-markers bottom">
+                <div class="marker"></div>
+                <div class="marker major"></div>
+                <div class="marker"></div>
+            </div>
+            <div class="edge-markers left">
+                <div class="marker"></div>
+                <div class="marker major"></div>
+                <div class="marker"></div>
+            </div>
+
+            <div class="watch">
+                <div class="watch-shine"></div>
+
+                <div class="watch-face">
+                    <div class="face-glass"></div>
+                    <div class="face-reflection"></div>
+                    <div id="wordGrid" class="word-grid"></div>
+
+                </div>
+
+                <!-- Side button -->
+                <div class="side-button">
+                    <div class="button-top"></div>
+                    <div class="button-body">
+                        <div class="button-grip"></div>
+                        <div class="button-grip"></div>
+                        <div class="button-grip"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info panel -->
+        <div class="info-panel">
+            <div class="time-container">
+                <div class="digital-time" id="digitalTime">
+                    <span class="time-digit">0</span><span class="time-digit">0</span>
+                    <span class="time-separator">:</span>
+                    <span class="time-digit">0</span><span class="time-digit">0</span>
+                    <span class="time-separator">:</span>
+                    <span class="time-digit">0</span><span class="time-digit">0</span>
+                </div>
+                <div class="time-period" id="timePeriod">AM</div>
+            </div>
+            <div class="date-display" id="dateDisplay">Monday, January 1, 2024</div>
+            <div class="reading-text" id="readingText">IT IS TWELVE O'CLOCK</div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

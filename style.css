@@ -1,0 +1,773 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --gold: #ffd700;
+    --gold-light: #ffe55c;
+    --gold-dark: #b8860b;
+    --bg-dark: #0a0a0a;
+    --text-dim: #1a1a1a;
+}
+
+body {
+    font-family: 'Rajdhani', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-dark);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Particles canvas */
+#particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+/* Ambient background light */
+.ambient-light {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1000px;
+    height: 1000px;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.12) 0%, rgba(255, 165, 0, 0.06) 40%, transparent 70%);
+    filter: blur(120px);
+    pointer-events: none;
+    animation: ambientPulse 15s ease-in-out infinite;
+    z-index: 0;
+}
+
+@keyframes ambientPulse {
+
+    0%,
+    100% {
+        opacity: 0.4;
+        transform: translate(-50%, -50%) scale(1.15);
+    }
+
+    50% {
+        opacity: 0.6;
+        transform: translate(-50%, -50%) scale(1.15);
+    }
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 100px;
+    position: relative;
+    z-index: 1;
+    animation: containerFadeIn 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes containerFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Watch Container */
+.watch-container {
+    position: relative;
+    width: 540px;
+    height: 540px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 40px 80px rgba(0, 0, 0, 0.8));
+}
+
+/* Corner Accents */
+.corner-accent {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--gold);
+    z-index: 10;
+    opacity: 0.6;
+    animation: cornerGlow 4s ease-in-out infinite;
+}
+
+@keyframes cornerGlow {
+
+    0%,
+    100% {
+        opacity: 0.4;
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+    }
+
+    50% {
+        opacity: 0.7;
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    }
+}
+
+.corner-tl {
+    top: -5px;
+    left: -5px;
+    border-right: none;
+    border-bottom: none;
+}
+
+.corner-tr {
+    top: -5px;
+    right: -5px;
+    border-left: none;
+    border-bottom: none;
+}
+
+.corner-bl {
+    bottom: -5px;
+    left: -5px;
+    border-right: none;
+    border-top: none;
+}
+
+.corner-br {
+    bottom: -5px;
+    right: -5px;
+    border-left: none;
+    border-top: none;
+}
+
+/* Edge Markers */
+.edge-markers {
+    position: absolute;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.edge-markers.top {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.edge-markers.bottom {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.edge-markers.left {
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    flex-direction: column;
+}
+
+.edge-markers.right {
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    flex-direction: column;
+}
+
+.edge-markers .marker {
+    width: 3px;
+    height: 15px;
+    background: linear-gradient(180deg, var(--gold) 0%, var(--gold-dark) 100%);
+    border-radius: 2px;
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+    animation: markerPulse 4s ease-in-out infinite;
+}
+
+.edge-markers.left .marker,
+.edge-markers.right .marker {
+    width: 15px;
+    height: 3px;
+}
+
+.edge-markers .marker.major {
+    width: 5px;
+    height: 22px;
+    background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-dark) 100%);
+    box-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
+}
+
+.edge-markers.left .marker.major,
+.edge-markers.right .marker.major {
+    width: 22px;
+    height: 5px;
+}
+
+@keyframes markerPulse {
+
+    0%,
+    100% {
+        opacity: 0.7;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+/* Main Watch - Square/Rectangle */
+.watch {
+    width: 500px;
+    height: 500px;
+    background:
+        linear-gradient(145deg, #3a3a3a 0%, #2a2a2a 40%, #1a1a1a 100%);
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow:
+        0 70px 140px rgba(0, 0, 0, 0.9),
+        0 0 0 4px #1a1a1a,
+        0 0 0 8px #3a3a3a,
+        0 0 0 9px rgba(255, 215, 0, 0.1),
+        inset 0 3px 12px rgba(255, 255, 255, 0.15),
+        inset 0 -3px 12px rgba(0, 0, 0, 0.6);
+    position: relative;
+    transition: transform 0.1s ease-out;
+    transform-style: preserve-3d;
+}
+
+/* Watch shine effect */
+.watch-shine {
+    position: absolute;
+    top: -5%;
+    left: -5%;
+    width: 110%;
+    height: 110%;
+    background: radial-gradient(ellipse at 28% 28%, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.05) 40%, transparent 60%);
+    border-radius: 15px;
+    pointer-events: none;
+    animation: shineMove 12s ease-in-out infinite;
+}
+
+@keyframes shineMove {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+        opacity: 0.6;
+    }
+
+    50% {
+        transform: translate(10px, 10px);
+        opacity: 0.8;
+    }
+}
+
+/* Watch Face */
+.watch-face {
+    width: 100%;
+    height: 100%;
+    background:
+        linear-gradient(145deg, #1f1f1f 0%, #0f0f0f 40%, #000000 100%);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow:
+        inset 0 0 100px rgba(0, 0, 0, 0.95),
+        inset 0 0 60px rgba(0, 0, 0, 0.85),
+        inset 0 4px 8px rgba(0, 0, 0, 0.9);
+}
+
+/* Glass effect on face */
+.face-glass {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 30%, transparent 50%);
+    pointer-events: none;
+    border-radius: 8px;
+}
+
+.face-reflection {
+    position: absolute;
+    top: 15%;
+    left: 15%;
+    width: 30%;
+    height: 30%;
+    background: radial-gradient(ellipse, rgba(255, 255, 255, 0.06) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(20px);
+    animation: reflectionFloat 8s ease-in-out infinite;
+}
+
+@keyframes reflectionFloat {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(10px, 10px) scale(1.1);
+    }
+}
+
+/* Brand Logo */
+.brand-logo {
+    position: absolute;
+    top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+}
+
+.logo-text {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 5px;
+    color: #888;
+    text-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
+    font-family: 'Orbitron', monospace;
+    animation: logoGlow 6s ease-in-out infinite;
+}
+
+.logo-subtitle {
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    color: #555;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+@keyframes logoGlow {
+
+    0%,
+    100% {
+        text-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
+        opacity: 0.7;
+    }
+
+    50% {
+        text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+        opacity: 1;
+    }
+}
+
+/* Swiss Made */
+.swiss-made {
+    position: absolute;
+    bottom: 50px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: #444;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.swiss-made .dot {
+    font-size: 8px;
+    color: #666;
+}
+
+/* Word Grid */
+.word-grid {
+    display: grid;
+    grid-template-columns: repeat(11, 1fr);
+    gap: 10px;
+    padding: 40px;
+    width: 100%;
+    max-width: 440px;
+}
+
+.word-grid span {
+    color: var(--text-dim);
+    font-size: 24px;
+    font-weight: 900;
+    text-align: center;
+    line-height: 1;
+    font-family: 'Orbitron', monospace;
+    transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.3s ease-out, color 0.3s ease-out;
+    user-select: none;
+    position: relative;
+    opacity: 0; 
+    transform-origin: center;
+}
+
+.word-grid.fade-in span {
+    opacity: 1;
+}
+
+.word-grid span.active {
+    color: var(--gold);
+    text-shadow:
+        0 0 20px rgba(255, 215, 0, 1),
+        0 0 40px rgba(255, 215, 0, 0.7),
+        0 0 60px rgba(255, 215, 0, 0.4),
+        0 0 80px rgba(255, 215, 0, 0.2);
+    transform: scale(1.2);
+    animation: letterPulse 4s ease-in-out infinite;
+}
+
+.word-grid span.active::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.25) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: -1;
+    animation: haloExpand 4s ease-in-out infinite;
+}
+
+@keyframes letterPulse {
+
+    0%,
+    100% {
+        text-shadow:
+            0 0 20px rgba(255, 215, 0, 1),
+            0 0 40px rgba(255, 215, 0, 0.7),
+            0 0 60px rgba(255, 215, 0, 0.4);
+    }
+
+    50% {
+        text-shadow:
+            0 0 30px rgba(255, 215, 0, 1),
+            0 0 60px rgba(255, 215, 0, 0.8),
+            0 0 90px rgba(255, 215, 0, 0.5);
+    }
+}
+
+@keyframes haloExpand {
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.6;
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.4);
+        opacity: 0.9;
+    }
+}
+
+/* Side Button */
+.side-button {
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    z-index: 10;
+}
+
+.button-top {
+    width: 16px;
+    height: 16px;
+    background: radial-gradient(circle, #3a3a3a, #1a1a1a);
+    border-radius: 50%;
+    box-shadow:
+        inset 0 1px 3px rgba(255, 255, 255, 0.2),
+        0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.button-body {
+    width: 26px;
+    height: 60px;
+    background: linear-gradient(90deg, #1a1a1a 0%, #3a3a3a 30%, #2a2a2a 70%, #1a1a1a 100%);
+    border-radius: 0 13px 13px 0;
+    box-shadow:
+        inset 0 2px 4px rgba(255, 255, 255, 0.15),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.5),
+        3px 0 20px rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 5px;
+    position: relative;
+}
+
+.button-body::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.1) 50%, transparent);
+}
+
+.button-grip {
+    width: 14px;
+    height: 2px;
+    background: linear-gradient(90deg, #0a0a0a 0%, #2a2a2a 50%, #0a0a0a 100%);
+    border-radius: 1px;
+    box-shadow:
+        inset 0 1px 1px rgba(0, 0, 0, 0.8),
+        0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Info Panel */
+.info-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    animation: infoPanelFadeIn 1.5s ease 0.4s backwards;
+}
+
+@keyframes infoPanelFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.time-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.digital-time {
+    font-size: 50px;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 0px;
+    font-variant-numeric: tabular-nums;
+    font-family: 'Orbitron', century, sans-serif;
+    text-shadow:
+        0 0 30px rgba(255, 215, 0, 0.6),
+        0 0 60px rgba(255, 215, 0, 0.3);
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.time-digit {
+    display: inline-block;
+    min-width: 45px;
+    text-align: center;
+    /* animation: digitFlip 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); */
+}
+
+@keyframes digitFlip {
+    0% {
+        transform: rotateX(0deg);
+    }
+
+    50% {
+        transform: rotateX(90deg);
+    }
+
+    100% {
+        transform: rotateX(0deg);
+    }
+}
+
+.time-separator {
+    animation: blink 3s ease-in-out infinite;
+    margin: 0 5px;
+}
+
+@keyframes blink {
+
+    0%,
+    49%,
+    100% {
+        opacity: 1;
+    }
+
+    50%,
+    99% {
+        opacity: 0.3;
+    }
+}
+
+.time-period {
+    font-size: 24px;
+    font-weight: 700;
+    color: rgba(255, 215, 0, 0.6);
+    font-family: 'Orbitron', monospace;
+    letter-spacing: 2px;
+}
+
+.digital-time::before {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0.4;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.date-display {
+    font-size: 20px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 3px;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+.reading-text {
+    font-size: 18px;
+    font-weight: 600;
+    color: rgba(255, 215, 0, 0.7);
+    letter-spacing: 4px;
+    font-family: 'Rajdhani', sans-serif;
+    text-transform: uppercase;
+    padding: 12px 30px;
+    background: rgba(255, 215, 0, 0.05);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 30px;
+    backdrop-filter: blur(10px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        gap: 60px;
+    }
+
+    .watch-container {
+        width: 420px;
+        height: 420px;
+    }
+
+    .watch {
+        width: 380px;
+        height: 380px;
+        padding: 20px;
+    }
+
+    .word-grid {
+        gap: 7px;
+        padding: 28px;
+        max-width: 340px;
+    }
+
+    .word-grid span {
+        font-size: 19px;
+    }
+
+    .digital-time {
+        font-size: 52px;
+    }
+
+    .time-digit {
+        min-width: 32px;
+    }
+
+    .time-period {
+        font-size: 18px;
+    }
+
+    .date-display {
+        font-size: 16px;
+    }
+
+    .reading-text {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .watch-container {
+        width: 320px;
+        height: 320px;
+    }
+
+    .watch {
+        width: 280px;
+        height: 280px;
+        padding: 15px;
+    }
+
+    .word-grid {
+        gap: 5px;
+        padding: 20px;
+        max-width: 250px;
+    }
+
+    .word-grid span {
+        font-size: 15px;
+    }
+
+    .brand-logo {
+        top: 35px;
+    }
+
+    .logo-text {
+        font-size: 11px;
+    }
+
+    .swiss-made {
+        bottom: 35px;
+        font-size: 8px;
+    }
+
+    .digital-time {
+        font-size: 38px;
+    }
+
+    .time-digit {
+        min-width: 24px;
+    }
+
+    .time-period {
+        font-size: 14px;
+    }
+
+    .date-display {
+        font-size: 13px;
+    }
+
+    .reading-text {
+        font-size: 11px;
+        padding: 8px 20px;
+    }
+
+    .button-body {
+        width: 20px;
+        height: 48px;
+    }
+
+    .button-top {
+        width: 12px;
+        height: 12px;
+    }
+}
