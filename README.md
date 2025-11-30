@@ -8,7 +8,7 @@
 
 ### *A luxurious timepiece that spells out time in words with stunning 3D effects*
 
-[View Demo](#)
+[Click Me to View Demo](https://mutahharbhutta.github.io/Premium-Word-Clock/)
 
 </div>
 
@@ -119,3 +119,4 @@ This project is open source and available under the [MIT License](LICENSE).
 **If you found this helpful, give it a ⭐!**
 
 </div>
+
